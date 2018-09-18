@@ -25,8 +25,14 @@ Sightings.prototype.getData = function () {
 };
 
 Sightings.prototype.postSighting = function (sighting) {
-  
+  this.request.post(sighting)
+    // console.log(sighting);
+    .then((sightings) => {
+      PubSub.publish('Sightings:data-loaded', sightings);
+    })
+    .catch(console.error);
 };
+
 
 Sightings.prototype.deleteSighting = function (sightingId) {
   this.request.delete(sightingId)
